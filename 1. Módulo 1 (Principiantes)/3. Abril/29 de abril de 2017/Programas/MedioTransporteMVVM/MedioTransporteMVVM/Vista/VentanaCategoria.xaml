@@ -1,0 +1,37 @@
+﻿<Controls:MetroWindow x:Class="VentanaCategoria"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedioTransporteMVVM"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        mc:Ignorable="d"
+        Title="VentanaCategoria" Height="300" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Categoria" Grid.Row="0"/>
+        <Label Content="Imagen" Grid.Row="1"/>
+        <TextBox IsReadOnly="{Binding LecturaDescripcion}" Text="{Binding Descripcion}" Grid.Row="0" Grid.Column="1"/>
+        <TextBox IsReadOnly="{Binding LecturaImagen}" Text="{Binding Imagen}" Grid.Row="1" Grid.Column="1"/>
+        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"/>
+        <DataGrid SelectedItem="{Binding ElementoSeleccionado}" ColumnWidth="*" CanUserAddRows="False" IsReadOnly="True" ItemsSource="{Binding ListaCategoria}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"/>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="3" Orientation="Horizontal">
+            <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Agregar" IsEnabled="{Binding BtnNuevoActivado}" Command="{Binding Modelo}" CommandParameter="BtnAgregar"/>
+            <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Eliminar" Command="{Binding Modelo}" CommandParameter="BtnEliminar"/>
+            <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Modificar"/>
+            <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Actualizar"/>
+            <Button Style="{StaticResource AccentedSquareButtonStyle}" Content="Guardar" IsEnabled="{Binding BtnGuardarActivado}" Command="{Binding Modelo}" CommandParameter="BtnGuardar"/>
+        </StackPanel>
+        
+    </Grid>
+</Controls:MetroWindow>
