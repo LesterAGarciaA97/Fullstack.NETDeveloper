@@ -1,0 +1,10 @@
+var MiPeso = prompt("¿Cuál es tu peso?");
+var Peso = parseInt(MiPeso);
+var g_Tierra = 9.8;
+var g_Marte = 3.7;
+var g_Jupiter = 24.8;
+var PesoFinal;
+PesoFinal = Peso * g_Marte/g_Tierra;
+PesoFinal = parseInt(PesoFinal);
+console.log(PesoFinal);
+document.write("Tu peso en Marte es de <strong>" + PesoFinal + "<strong/> libras");

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+  <head>
+    <title>Ejemplo uso del elemendo DIV y atributos id</title>
+    <meta charset="utf-8">
+    <style>
+      *{
+          margin: 0;
+          padding: 0;
+      }
+      a:link, a:visited, a:hover, a:active{
+        color: #0F0
+        font-size: 16px;
+      }
+      body{
+        background: #EEE;
+        font-family: Arial;
+      }
+      h1{
+        color: #C0C;
+        font-size: 24px;
+      }
+      p{
+        font-size: 16px;
+      }
+      ul{
+        list-style-type: none;
+      }
+      #cabecera{
+        color: #FF9;
+        background-color: #000;
+        padding: 10px;
+      }
+      #contenedor{
+        margin: auto;
+        width: 800px;
+      }
+      #contenido{
+        background-color: #DDD;
+        float: left;
+        height: 500px;
+        padding: 10px;
+        width: 560px;
+      }
+      #menu{
+        background-color: #999;
+        float: left;
+        height: 480px;
+        width: 180px;
+        padding: 20px;
+      }
+      #pie{
+        background-color: #BBB;
+        color: #900;
+        clear: both;
+        padding: 10px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="contenedor">
+      <div id="cabecera">
+        <p> Este párrafo está en la cabecera</p>
+      </div>
+      <div id="menu">
+        <ul>
+          <li><a href="http://www.google.com.gt">Enlace 1</a></li>
+          <li><a href="enlace2.html">Enlace 2</a></li>
+          <li><a href="enlace3.html">Enlace 3</a></li>
+        </ul>
+      </div>
+      <div id="contenido">
+        <h1>Ejemplo de los elementos</h1>
+        <p>Acá iría el contenido de la página</p>
+        <p><i>Ejemplo 1</i></p>
+        <p>Ejemplo 2</p>
+        <p>Ejemplo 3</p>
+        <p>Ejemplo 4</p>
+        <p>Ejemplo 5</p>
+      </div>
+      <div id="pie">
+        <p>Prohíbida su copia o distribución<p>
+    </div>
+  </body>
+</html>

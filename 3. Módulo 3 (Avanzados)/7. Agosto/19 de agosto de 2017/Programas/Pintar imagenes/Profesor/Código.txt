@@ -1,0 +1,91 @@
+var vp = document.getElementById("bosque");
+var papel = vp.getContext("2d");
+var imagenFondo ={
+  url: "tile.png",
+  carga:false
+};
+var casa ={
+  url: "casa.png",
+  carga:false
+}
+var llave={
+  url: "key.png",
+  carga:false
+}
+var teclas = {
+  UP:38,
+  DOWN:40,
+  LEFT:37,
+  RIGHT:39
+}
+imagenFondo.imagen = new Image();
+imagenFondo.imagen.src = imagenFondo.url;
+imagenFondo.imagen.addEventListener("load",cargarFondo);
+casa.imagen = new Image();
+casa.imagen.src = casa.url;
+casa.imagen.addEventListener("load",cargarCasa);
+llave.imagen = new Image();
+llave.imagen.src = llave.url;
+llave.imagen.addEventListener("load",cargarLlave);
+document.addEventListener("keydown",movimiento);
+var llaveX;
+var llaveY;
+function movimiento(evento){
+  switch(evento.keyCode){
+      case teclas.UP:
+        llaveY = llaveY - 1;
+        console.log("X: " + llaveX);
+        console.log("Y: " + llaveY);
+        console.log((10+(80*llaveY)));
+        //papel.drawImage(llave.imagen,llaveX,llaveY);
+        break;
+      case teclas.DOWN:
+        llaveY = llaveY + 1;
+        console.log("X: " + llaveX);
+        console.log("Y: " + llaveY);
+        console.log((10+(80*llaveY)));
+        break;
+  }
+  console.log(evento.keyCode);
+}
+function cargarFondo(){
+  imagenFondo.carga = true;
+  dibujar();
+}
+function cargarCasa(){
+  casa.carga = true;
+  dibujar();
+}
+function cargarLlave(){
+  llave.carga = true;
+  dibujar();
+}
+function dibujar(){
+  if(imagenFondo.carga){
+    papel.drawImage(imagenFondo.imagen,0,0);
+  }
+  if(casa.carga){
+    var numeroCasas = aleatorioCasas();
+    for(var i = 0; i < numeroCasas ; i++ ){
+      var x = aleatorioPosicion();
+      var y = aleatorioPosicion();
+      papel.drawImage(casa.imagen,10+(80*x),10+(80*y));
+    }
+  }
+  if(llave.carga){
+    llaveX = aleatorioPosicion();
+    llaveY = aleatorioPosicion();
+    papel.drawImage(llave.imagen,10+(80*llaveX),10+(80*llaveY));
+    console.log("X: " + llaveX);
+    console.log("Y: " + llaveY);
+  }
+}
+function aleatorioCasas(){
+  return aleatorio(4,10);
+}
+function aleatorioPosicion(){
+  return aleatorio(0,5);
+}
+function aleatorio(minimo,maximo){
+  return Math.floor(Math.random()*(maximo-minimo+1)+minimo);
+}

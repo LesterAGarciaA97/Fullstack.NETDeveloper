@@ -1,0 +1,26 @@
+﻿@model MVCproductos.Models.TipoEmpaque
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Tipo de empaque</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.CodigoTipoEmpaque }) |
+    @Html.ActionLink("Regresar a la lista", "Index")
+</p>

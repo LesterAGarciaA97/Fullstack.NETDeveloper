@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SistemaInventario2017.Models.Proveedores>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RazonSocial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PaginaWeb)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContactoPrincipal)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nit)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RazonSocial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PaginaWeb)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContactoPrincipal)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CodigoProveedor }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CodigoProveedor }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CodigoProveedor })
+        </td>
+    </tr>
+}
+
+</table>

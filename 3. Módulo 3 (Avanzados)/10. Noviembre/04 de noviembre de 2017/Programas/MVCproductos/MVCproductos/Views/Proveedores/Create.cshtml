@@ -1,0 +1,60 @@
+﻿@model MVCproductos.Models.Proveedores
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Crear</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Proveedores</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nit, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nit)
+                @Html.ValidationMessageFor(model => model.Nit)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RazonSocial, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RazonSocial)
+                @Html.ValidationMessageFor(model => model.RazonSocial)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaginaWeb, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PaginaWeb)
+                @Html.ValidationMessageFor(model => model.PaginaWeb)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactoPrincipal, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContactoPrincipal)
+                @Html.ValidationMessageFor(model => model.ContactoPrincipal)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar a la lista", "Index")
+</div>
