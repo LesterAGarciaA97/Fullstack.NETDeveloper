@@ -1,0 +1,498 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Agenda2017I013HModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contacto_Direcciones">
+          <Key>
+            <PropertyRef Name="codigoDireccion" />
+          </Key>
+          <Property Name="codigoDireccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="direccion" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="codigoContacto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacto_Email">
+          <Key>
+            <PropertyRef Name="codigoEmail" />
+          </Key>
+          <Property Name="codigoEmail" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="codigoContacto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacto_Telefonos">
+          <Key>
+            <PropertyRef Name="codigoTelefono" />
+          </Key>
+          <Property Name="codigoTelefono" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numero" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="codigoContacto" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contactos">
+          <Key>
+            <PropertyRef Name="codigoContacto" />
+          </Key>
+          <Property Name="codigoContacto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="apellidos" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="nombres" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="codigoUsuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="codigoRol" />
+          </Key>
+          <Property Name="codigoRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="codigoUsuario" />
+          </Key>
+          <Property Name="codigoUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="128" />
+          <Property Name="codigoRol" Type="int" Nullable="false" />
+          <Property Name="NumeroContactos" Type="int" />
+        </EntityType>
+        <Association Name="FK_Contacto_Usuario">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="codigoUsuario" />
+            </Principal>
+            <Dependent Role="Contactos">
+              <PropertyRef Name="codigoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Direccion_Contacto">
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="1" />
+          <End Role="Contacto_Direcciones" Type="Self.Contacto_Direcciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contactos">
+              <PropertyRef Name="codigoContacto" />
+            </Principal>
+            <Dependent Role="Contacto_Direcciones">
+              <PropertyRef Name="codigoContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Email_Contacto">
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="1" />
+          <End Role="Contacto_Email" Type="Self.Contacto_Email" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contactos">
+              <PropertyRef Name="codigoContacto" />
+            </Principal>
+            <Dependent Role="Contacto_Email">
+              <PropertyRef Name="codigoContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telefono_Contacto">
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="1" />
+          <End Role="Contacto_Telefonos" Type="Self.Contacto_Telefonos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contactos">
+              <PropertyRef Name="codigoContacto" />
+            </Principal>
+            <Dependent Role="Contacto_Telefonos">
+              <PropertyRef Name="codigoContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="codigoRol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="codigoRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_AgregarContacto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Nombres" Type="varchar" Mode="In" />
+          <Parameter Name="Apellidos" Type="varchar" Mode="In" />
+          <Parameter Name="CodigoUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_AgregarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="login" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="codigoRol" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarContactosPorUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ConsultarUsuarios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_EliminarContacto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoContacto" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_EliminarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_ModificarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CodigoUsuario" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="login" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="rol" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="Agenda2017I013HModelStoreContainer">
+          <EntitySet Name="Contacto_Direcciones" EntityType="Self.Contacto_Direcciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacto_Email" EntityType="Self.Contacto_Email" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacto_Telefonos" EntityType="Self.Contacto_Telefonos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contactos" EntityType="Self.Contactos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Contacto_Usuario" Association="Self.FK_Contacto_Usuario">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Contactos" EntitySet="Contactos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Direccion_Contacto" Association="Self.FK_Direccion_Contacto">
+            <End Role="Contactos" EntitySet="Contactos" />
+            <End Role="Contacto_Direcciones" EntitySet="Contacto_Direcciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Email_Contacto" Association="Self.FK_Email_Contacto">
+            <End Role="Contactos" EntitySet="Contactos" />
+            <End Role="Contacto_Email" EntitySet="Contacto_Email" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telefono_Contacto" Association="Self.FK_Telefono_Contacto">
+            <End Role="Contactos" EntitySet="Contactos" />
+            <End Role="Contacto_Telefonos" EntitySet="Contacto_Telefonos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Agenda2017I013HModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Contacto_Direcciones">
+          <Key>
+            <PropertyRef Name="codigoDireccion" />
+          </Key>
+          <Property Name="codigoDireccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="direccion" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codigoContacto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contactos" Relationship="Self.FK_Direccion_Contacto" FromRole="Contacto_Direcciones" ToRole="Contactos" />
+        </EntityType>
+        <EntityType Name="Contacto_Email">
+          <Key>
+            <PropertyRef Name="codigoEmail" />
+          </Key>
+          <Property Name="codigoEmail" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codigoContacto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contactos" Relationship="Self.FK_Email_Contacto" FromRole="Contacto_Email" ToRole="Contactos" />
+        </EntityType>
+        <EntityType Name="Contacto_Telefonos">
+          <Key>
+            <PropertyRef Name="codigoTelefono" />
+          </Key>
+          <Property Name="codigoTelefono" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numero" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codigoContacto" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contactos" Relationship="Self.FK_Telefono_Contacto" FromRole="Contacto_Telefonos" ToRole="Contactos" />
+        </EntityType>
+        <EntityType Name="Contactos">
+          <Key>
+            <PropertyRef Name="codigoContacto" />
+          </Key>
+          <Property Name="codigoContacto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="apellidos" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombres" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="codigoUsuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contacto_Direcciones" Relationship="Self.FK_Direccion_Contacto" FromRole="Contactos" ToRole="Contacto_Direcciones" />
+          <NavigationProperty Name="Contacto_Email" Relationship="Self.FK_Email_Contacto" FromRole="Contactos" ToRole="Contacto_Email" />
+          <NavigationProperty Name="Contacto_Telefonos" Relationship="Self.FK_Telefono_Contacto" FromRole="Contactos" ToRole="Contacto_Telefonos" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Contacto_Usuario" FromRole="Contactos" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="codigoRol" />
+          </Key>
+          <Property Name="codigoRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descripcion" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Rol" FromRole="Roles" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="codigoUsuario" />
+          </Key>
+          <Property Name="codigoUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="codigoRol" Type="Int32" Nullable="false" />
+          <Property Name="NumeroContactos" Type="Int32" />
+          <NavigationProperty Name="Contactos" Relationship="Self.FK_Contacto_Usuario" FromRole="Usuarios" ToRole="Contactos" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Usuario_Rol" FromRole="Usuarios" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK_Direccion_Contacto">
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="1" />
+          <End Role="Contacto_Direcciones" Type="Self.Contacto_Direcciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contactos">
+              <PropertyRef Name="codigoContacto" />
+            </Principal>
+            <Dependent Role="Contacto_Direcciones">
+              <PropertyRef Name="codigoContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Email_Contacto">
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="1" />
+          <End Role="Contacto_Email" Type="Self.Contacto_Email" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contactos">
+              <PropertyRef Name="codigoContacto" />
+            </Principal>
+            <Dependent Role="Contacto_Email">
+              <PropertyRef Name="codigoContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Telefono_Contacto">
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="1" />
+          <End Role="Contacto_Telefonos" Type="Self.Contacto_Telefonos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contactos">
+              <PropertyRef Name="codigoContacto" />
+            </Principal>
+            <Dependent Role="Contacto_Telefonos">
+              <PropertyRef Name="codigoContacto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contacto_Usuario">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="codigoUsuario" />
+            </Principal>
+            <Dependent Role="Contactos">
+              <PropertyRef Name="codigoUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="codigoRol" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="codigoRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Agenda2017I013HEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contacto_Direcciones" EntityType="Self.Contacto_Direcciones" />
+          <EntitySet Name="Contacto_Email" EntityType="Self.Contacto_Email" />
+          <EntitySet Name="Contacto_Telefonos" EntityType="Self.Contacto_Telefonos" />
+          <EntitySet Name="Contactos" EntityType="Self.Contactos" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK_Direccion_Contacto" Association="Self.FK_Direccion_Contacto">
+            <End Role="Contactos" EntitySet="Contactos" />
+            <End Role="Contacto_Direcciones" EntitySet="Contacto_Direcciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Email_Contacto" Association="Self.FK_Email_Contacto">
+            <End Role="Contactos" EntitySet="Contactos" />
+            <End Role="Contacto_Email" EntitySet="Contacto_Email" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Telefono_Contacto" Association="Self.FK_Telefono_Contacto">
+            <End Role="Contactos" EntitySet="Contactos" />
+            <End Role="Contacto_Telefonos" EntitySet="Contacto_Telefonos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contacto_Usuario" Association="Self.FK_Contacto_Usuario">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Contactos" EntitySet="Contactos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <FunctionImport Name="sp_AgregarContacto">
+            <Parameter Name="Nombres" Mode="In" Type="String" />
+            <Parameter Name="Apellidos" Mode="In" Type="String" />
+            <Parameter Name="CodigoUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_AgregarUsuario">
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="login" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="codigoRol" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarContactosPorUsuario" ReturnType="Collection(Agenda2017I013HModel.sp_ConsultarContactosPorUsuario_Result)">
+            <Parameter Name="CodigoUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ConsultarUsuarios" ReturnType="Collection(Agenda2017I013HModel.sp_ConsultarUsuarios_Result)" />
+          <FunctionImport Name="sp_EliminarContacto">
+            <Parameter Name="CodigoContacto" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_EliminarUsuario">
+            <Parameter Name="CodigoUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_ModificarUsuario">
+            <Parameter Name="CodigoUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="login" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="rol" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="sp_ConsultarContactosPorUsuario_Result">
+          <Property Type="Int32" Name="codigoContacto" Nullable="false" />
+          <Property Type="String" Name="apellidos" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="nombres" Nullable="false" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="sp_ConsultarUsuarios_Result">
+          <Property Type="Int32" Name="codigoUsuario" Nullable="false" />
+          <Property Type="String" Name="nombre" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="login" Nullable="false" MaxLength="128" />
+          <Property Type="String" Name="password" Nullable="false" MaxLength="300" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="codigoRol" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Agenda2017I013HModelStoreContainer" CdmEntityContainer="Agenda2017I013HEntities">
+          <EntitySetMapping Name="Contacto_Direcciones">
+            <EntityTypeMapping TypeName="Agenda2017I013HModel.Contacto_Direcciones">
+              <MappingFragment StoreEntitySet="Contacto_Direcciones">
+                <ScalarProperty Name="codigoDireccion" ColumnName="codigoDireccion" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="codigoContacto" ColumnName="codigoContacto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacto_Email">
+            <EntityTypeMapping TypeName="Agenda2017I013HModel.Contacto_Email">
+              <MappingFragment StoreEntitySet="Contacto_Email">
+                <ScalarProperty Name="codigoEmail" ColumnName="codigoEmail" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="codigoContacto" ColumnName="codigoContacto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacto_Telefonos">
+            <EntityTypeMapping TypeName="Agenda2017I013HModel.Contacto_Telefonos">
+              <MappingFragment StoreEntitySet="Contacto_Telefonos">
+                <ScalarProperty Name="codigoTelefono" ColumnName="codigoTelefono" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="codigoContacto" ColumnName="codigoContacto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contactos">
+            <EntityTypeMapping TypeName="Agenda2017I013HModel.Contactos">
+              <MappingFragment StoreEntitySet="Contactos">
+                <ScalarProperty Name="codigoContacto" ColumnName="codigoContacto" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+                <ScalarProperty Name="codigoUsuario" ColumnName="codigoUsuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="Agenda2017I013HModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="codigoRol" ColumnName="codigoRol" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="Agenda2017I013HModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="codigoUsuario" ColumnName="codigoUsuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="codigoRol" ColumnName="codigoRol" />
+                <ScalarProperty Name="NumeroContactos" ColumnName="NumeroContactos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_AgregarContacto" FunctionName="Agenda2017I013HModel.Store.sp_AgregarContacto" />
+          <FunctionImportMapping FunctionImportName="sp_AgregarUsuario" FunctionName="Agenda2017I013HModel.Store.sp_AgregarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_ConsultarContactosPorUsuario" FunctionName="Agenda2017I013HModel.Store.sp_ConsultarContactosPorUsuario">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Agenda2017I013HModel.sp_ConsultarContactosPorUsuario_Result">
+                <ScalarProperty Name="codigoContacto" ColumnName="codigoContacto" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="nombres" ColumnName="nombres" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_ConsultarUsuarios" FunctionName="Agenda2017I013HModel.Store.sp_ConsultarUsuarios">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Agenda2017I013HModel.sp_ConsultarUsuarios_Result">
+                <ScalarProperty Name="codigoUsuario" ColumnName="codigoUsuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="codigoRol" ColumnName="codigoRol" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_EliminarContacto" FunctionName="Agenda2017I013HModel.Store.sp_EliminarContacto" />
+          <FunctionImportMapping FunctionImportName="sp_EliminarUsuario" FunctionName="Agenda2017I013HModel.Store.sp_EliminarUsuario" />
+          <FunctionImportMapping FunctionImportName="sp_ModificarUsuario" FunctionName="Agenda2017I013HModel.Store.sp_ModificarUsuario" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,56 @@
+create database Agenda2017I013H
+go
+use Agenda2017I013H
+go
+create table Roles
+(
+  codigoRol int identity(1,1) not null primary key,
+  descripcion varchar(64) not null 
+)
+go
+create table Usuarios
+(
+ codigoUsuario int identity(1,1) not null primary key,
+ nombre varchar(128) not null,
+ login varchar(128) not null,
+ password varchar(128) not null,
+ email varchar(128), 
+ codigoRol int not null,
+ Constraint FK_Usuario_Rol foreign key (codigoRol) references Roles(codigoRol)
+)
+go
+create table Contactos
+(
+ codigoContacto int identity(1,1) not null primary key,
+ apellidos varchar(128) not null,
+ nombres varchar(128) not null,
+ codigoUsuario int not null,
+ constraint FK_Contacto_Usuario foreign key (codigoUsuario) references Usuarios(codigoUsuario)
+)
+go
+create table Contacto_Direcciones
+(
+ codigoDireccion int identity(1,1) not null primary key,
+ direccion varchar(128) not null,
+ descripcion varchar(128) not null,
+ codigoContacto int not null,
+ constraint FK_Direccion_Contacto foreign key (codigoContacto) references Contactos(codigoContacto)
+)
+go
+create table Contacto_Telefonos
+(
+ codigoTelefono int identity(1,1) not null primary key,
+ numero varchar(32) not null,
+ descripcion varchar(128) not null,
+ codigoContacto int not null,
+ constraint FK_Telefono_Contacto foreign key (codigoContacto) references Contactos(codigoContacto)
+)
+go
+create table Contacto_Email
+(
+ codigoEmail int identity(1,1) not null primary key,
+ email varchar(64) not null,
+ descripcion varchar(128) not null,
+ codigoContacto int not null,
+ constraint FK_Email_Contacto foreign key (codigoContacto) references Contactos(codigoContacto)
+)
